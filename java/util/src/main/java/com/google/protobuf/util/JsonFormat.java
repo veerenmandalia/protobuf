@@ -1709,8 +1709,8 @@ public class JsonFormat {
         }
 
         if (result == null) {
-          throw new InvalidProtocolBufferException(
-              "Invalid enum value: " + value + " for enum type: " + enumDescriptor.getFullName());
+          //TODO: Add an option to toggle this behavior
+          return enumDescriptor.createUnrecognizedDescriptor();
         }
       }
       return result;

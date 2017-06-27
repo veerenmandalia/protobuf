@@ -1140,13 +1140,9 @@ public class JsonFormatTest extends TestCase {
   }
 
   public void testParserRejectInvalidEnumValue() throws Exception {
-    try {
-      TestAllTypes.Builder builder = TestAllTypes.newBuilder();
-      mergeFromJson("{\n" + "  \"optionalNestedEnum\": \"XXX\"\n" + "}", builder);
-      fail("Exception is expected.");
-    } catch (InvalidProtocolBufferException e) {
-      // Expected.
-    }
+    TestAllTypes.Builder builder = TestAllTypes.newBuilder();
+    mergeFromJson("{\n" + "  \"optionalNestedEnum\": \"XXX\"\n" + "}", builder);
+    assertEquals(NestedEnum.UNRECOGNIZED, builder.getOptionalNestedEnum());
   }
 
   public void testParserUnknownFields() throws Exception {

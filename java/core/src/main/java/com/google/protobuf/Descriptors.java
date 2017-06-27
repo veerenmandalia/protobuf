@@ -1559,6 +1559,10 @@ public final class Descriptors {
       return Collections.unmodifiableList(Arrays.asList(values));
     }
 
+    public EnumValueDescriptor createUnrecognizedDescriptor() {
+      return new EnumValueDescriptor(file, this, -1);
+    }
+
     /**
      * Find an enum value by name.
      * @param name The unqualified name of the value (e.g. "FOO").
