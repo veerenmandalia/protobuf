@@ -66,6 +66,7 @@ import com.google.protobuf.MessageOrBuilder;
 import com.google.protobuf.NullValue;
 import com.google.protobuf.StringValue;
 import com.google.protobuf.Struct;
+import com.google.protobuf.Syntax;
 import com.google.protobuf.Timestamp;
 import com.google.protobuf.UInt32Value;
 import com.google.protobuf.UInt64Value;
@@ -1558,7 +1559,7 @@ public class JsonFormat {
         BigDecimal value = new BigDecimal(json.getAsString());
         return value.longValueExact();
       } catch (Exception e) {
-        throw new InvalidProtocolBufferException("Not an int32 value: " + json);
+        throw new InvalidProtocolBufferException("Not an int64 value: " + json);
       }
     }
 
@@ -1709,8 +1710,10 @@ public class JsonFormat {
         }
 
         if (result == null) {
-          throw new InvalidProtocolBufferException(
-              "Invalid enum value: " + value + " for enum type: " + enumDescriptor.getFullName());
+          //Use the enums' unrecognized value
+          //TODO: Add an option to enable/disable this behavior
+          List<EnumValueDescriptor> values = enumDescriptor.getValues();
+          return values.get(values.size()-1);
         }
       }
       return result;
